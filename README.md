@@ -4,5 +4,7 @@ This academic computer (YASAC) has 5 stages.
 In order to run the exercises corresponding to the first 2 stages, just uncomment the code you want to execute at code_mem.v.
 For stages 3-5, go to code_mem and write `` `include "code/{name_of_the_file_you_want_to_execute}.code" `` before the end instruction.
 
+Exercises asking to add new operations are not written in a specific file, the solution can be found at the control unit and at globals.vh
+
 
 You must have Icarus Verilog installed.
