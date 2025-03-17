@@ -1,0 +1,20 @@
+/*Write a program that shows a countdown from 10 to 0 in port01. At the end of the
+countdown it should output the number 0x8888 in port02:port01.
+*/
+
+code['h00] = {`LDI,  `R1,  8'h0a}; //Register one will have the ongoing countdown, starting at 10
+code['h01] = {`LDI,  `R2,  8'h01}; //Number one in order to substract 1 from the countdown
+code['h02] = {`LDI,  `R3,  8'h00}; //Number 0 in order to compare with the countdown
+
+code['h03] = {`STS,  `R1, 8'hf1}; //Output the countdown in port 1
+code['h04] = {`SUB,  `R1, 5'd0, `R2}; //decrement the contdown by 1
+
+
+code['h05] = {`SUB,  `R1, 5'd0, `R3};
+code['h06] = {`BRGE, 8'h03};
+
+code['h07] = {`LDI,  `R1,  8'h88};
+code['h08] = {`STS,  `R1, 8'hf1}; //Output the countdown in port 1
+code['h09] = {`STS,  `R1, 8'hf2}; //Output the countdown in port 1
+
+code['h0a] = {`STOP, 11'd0};

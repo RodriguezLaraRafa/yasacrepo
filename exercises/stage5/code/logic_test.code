@@ -1,0 +1,34 @@
+// Design:      Yet Another Simple Academic Computer (YASAC)
+// File:        logic_test.code
+// Description: Code memory program, to be included by code_mem.v.
+//              Tests logic instructioons. Works from stage 4.
+// Author:      Jorge Juan-Chico <jjchico@dte.us.es>
+// Date:        2021-04-03 (initial)
+
+//// Instruction formats
+//
+// format A: <opcode>(5) <Ra>(3) <zero>(5) <Rb>(3)
+// format B: <opcode>(5) <Ra>(3) <k>(8)
+// format C: <opcode>(5) <s>(3) <k>(8)
+//
+// k -> inmediate value
+// s -> branch condition code
+
+// input:
+//      port08 = 0x5a
+// expected output:
+//      port01 = 0x0a
+//      port02 = 0xde
+
+        // Code memory contents (program)
+
+        code['h00] = {`LDI,  `R1, 8'h0f};          // ldi r1, 0x0f
+        code['h01] = {`LDS,  `R0, 8'hf8};          // lds r0, 0xf8
+        code['h02] = {`AND,  `R0, 5'd0, `R1};      // and r0, r1
+        code['h03] = {`STS,  `R0, 8'hf1};          // sts 0xf1, r0
+        code['h04] = {`LDI,  `R2, 8'hc3};          // ldi r2, 0xc3
+        code['h05] = {`EOR,  `R1, 5'd0, `R2};      // eor r1, r2
+        code['h06] = {`LDS,  `R0, 8'hf8};          // lds r0, 0xf8
+        code['h07] = {`OR,   `R0, 5'd0, `R1};      // or  r0, r1
+        code['h08] = {`STS,  `R0, 8'hf2};          // sts 0xf2, r0
+        code['h09] = {`STOP,  3'h0, 8'h00};        // stop

@@ -1,0 +1,67 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Sat Apr  3 18:46:48 2021
+[*]
+[dumpfile] "/home/jjchico/Documentos/asignaturas/edc-is/units/unit-04-simple_computer/yasac/stage3/yasac_tb.vcd"
+[dumpfile_mtime] "Sat Apr  3 18:46:13 2021"
+[dumpfile_size] 11059
+[savefile] "/home/jjchico/Documentos/asignaturas/edc-is/units/unit-04-simple_computer/yasac/stage3/yasac_tb.gtkw"
+[timestart] 296300
+[size] 1554 767
+[pos] -270 -311
+*-15.595813 464600 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] test.
+[treeopen] test.uut.
+[treeopen] test.uut.data_unit.
+[sst_width] 233
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 202
+@28
+test.clk
+test.reset
+test.start
+test.ready
+test.uut.clpc
+test.uut.ipc
+test.uut.data_unit.wpc
+test.uut.wreg
+test.uut.wmar
+test.uut.rmem
+test.uut.wmem
+test.uut.wir
+@22
+test.uut.control_unit.state[2:0]
+test.uut.data_unit.bus[7:0]
+test.uut.data_unit.pc[7:0]
+test.uut.data_unit.mar[7:0]
+test.uut.data_unit.ir[15:0]
+@24
+test.uut.opcode[4:0]
+@c00022
+test.uut.data_unit.sa[2:0]
+@28
+(0)test.uut.data_unit.sa[2:0]
+(1)test.uut.data_unit.sa[2:0]
+(2)test.uut.data_unit.sa[2:0]
+@1401202
+-group_end
+@22
+test.uut.data_unit.sb[2:0]
+test.uut.data_unit.rega[7:0]
+test.uut.data_unit.regb[7:0]
+test.uut.data_unit.alu_b[7:0]
+@28
+test.uut.data_unit.op[1:0]
+@22
+test.uut.data_unit.alu_out[7:0]
+@28
+test.uut.data_unit.st_out[3:0]
+test.uut.data_unit.sreg[3:0]
+@23
+test.uut.data_unit.data_mem.port00[7:0]
+@22
+test.port01[7:0]
+test.port08[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

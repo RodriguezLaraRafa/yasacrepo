@@ -1,0 +1,22 @@
+/*
+Write a subroutine that multiplies unsigned numbers in registers R1 and R2 and
+returns the result in register R1. Do not take into account possible overflow. Use the subroutine in a
+program that reads a number in port08 and puts the result from multiplying this number by 7 in
+port01.
+*/
+
+ code['h00] = {`LDS,  `R1, 8'hf8};
+ code['h01] = {`LDI,  `R2, 8'h07};
+ code['h02] = {`CALL, 3'h0, 8'h05};  //Call multiply
+ code['h03] = {`STS,  `R1, 8'hf1};
+ code['h04] = {`STOP, 11'd0}; 
+
+ //Multiply subroutine. Inputs: R1, R2. Output:R1, which is R1*R2. 
+code['h05] = {`CPI,  `R2, 8'h00};
+code['h06] = {`BREQ,       8'h0a}; //Go to the return
+code['h07] = {`ADD,  `R1,  5'd0, `R1};
+
+code['h08] = {`SUBI,  `R2, 8'h01};
+code['h09] = {`JMP,  3'h0, 8'h05};
+
+code['h0a] = {`RET,  11'd0      };

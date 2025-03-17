@@ -1,0 +1,33 @@
+/*
+Write a program to count the number of bits set to 1 in port08. Save the number to
+*/
+
+//We are going to use a loop with n iterations, as many as bits has our mask. 
+
+code['h00] = {`LDI,  `R0, 8'h00}; //Counter of the bits set to 1
+code['h01] = {`LDI,  `R1, 8'b00000001}; //This is the AND mask we are going to be using and shifting to check if the bits are 1
+code['h02] = {`LDI,  `R2, 8'h01}; //Number one, just to increment the counter when needed
+code['h03] = {`LDS,  `R3, 8'hf8}; //port08
+code['h04] = {`JMP,  3'h0, 8'h07};  //Enter the loop
+
+
+//In case there is one bit in the desired position
+code['h05] = {`ADD,  `R0, 5'd0, `R2};
+code['h06] = {`JMP,  3'h0, 8'h0b};  //Go back to the end of the loop
+
+//Starts the loop 
+code['h07] = {`MOV,  `R4, 5'd0, `R3}; //We copy the number in order to operate with it
+code['h08] = {`AND,  `R4, 5'd0, `R1};
+code['h09] = {`SUB,  `R4, 5'd0, `R1};
+code['h0a] = {`BREQ,      8'h05}; //Every time this happens there are two options: same number or almost same number differing in 1 bit
+code['h0b] = {`BCLR,  `CF, 8'h0e}; //We clear the carry so that it does not affect the mask
+code['h0c] = {`ROL,  `R1, 8'h00};
+
+//We check the condition in the loop
+code['h0d] = {`MOV,  `R4, 5'd0, `R1}; //If the mask is 0 (less than 1), then we stop the loop
+code['h0e] = {`SUB,  `R4, 5'd0, `R2}; //Repeat loop if mask greater or equal than 1
+code['h0f] = {`BRSH,  8'h07};
+
+//Loop has ended
+code['h10] = {`STS,  `R0, 8'hf1};
+code['h11] = {`STOP, 11'd0}; 

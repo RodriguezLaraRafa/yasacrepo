@@ -1,0 +1,38 @@
+// Design:      Yet Another Simple Academic Computer (YASAC)
+// File:        stack_test.code
+// Description: Code memory program, to be included by code_mem.v.
+//              Tests stack instructions: PUSH, POP, CALL and RET.
+//              Works from stage 5.
+// Author:      Jorge Juan-Chico <jjchico@dte.us.es>
+// Date:        2021-04-11 (initial)
+
+//// Instruction formats
+//
+// format A: <opcode>(5) <Ra>(3) <zero>(5) <Rb>(3)
+// format B: <opcode>(5) <Ra>(3) <k>(8)
+// format C: <opcode>(5) <s>(3) <k>(8)
+//
+// k -> inmediate value
+// s -> branch condition code
+
+// input:
+//      port08 = 0x5a
+// expected output:
+//      port01 = 0x5a
+//      port02 = 0x5a
+
+// Code memory contents (program)
+
+code['h00] = {`LDS,  `R0,  8'hf8};      //         lds r0, 0xf8
+code['h01] = {`LDI,  `R1,  8'hff};      //         ldi r1, 0xff
+code['h02] = {`PUSH, `R0,  8'h00};      //         push r0
+code['h03] = {`POP,  `R1,  8'h00};      //         pop r1
+code['h04] = {`CALL, 3'h0, 8'h09};      //         call send
+code['h05] = {`STOP, 11'd0      };      //         stop
+code['h06] = {`STOP, 11'd0      };      //         stop
+code['h07] = {`STOP, 11'd0      };      //         stop
+code['h08] = {`STOP, 11'd0      };      //         stop
+code['h09] = {`STS,  `R1,  8'hf1};      // send    sts 0xf1, r1
+code['h0a] = {`STS,  `R0,  8'hf2};      //         sts 0xf2, r0
+code['h0b] = {`RET,  11'd0      };      //         ret
+code['h0c] = {`STOP, 11'd0      };      //         stop

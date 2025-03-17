@@ -1,0 +1,19 @@
+= YASAC stage 1
+
+Initial computer design.
+
+== Fixes
+
+* Forgot to implemente the LDI instruction in the control unit.
+
+== Notes
+
+* State of the control unit is routed to the top level through signal
+  state_out to test the implementation.
+
+* The top level at system.v includes:
+  - An edge detector to generate a one-cycle start pulse, so that 'start' input
+    can be driven by a push button.
+  - A slow 1Hz clock 'clk_in' to drive the computer, so that the operation of
+    the implemented system can be easily observed.
+  - A decoder for the control unit's state to light one LED at each state.

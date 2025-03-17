@@ -1,0 +1,45 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Wed Mar 24 19:54:16 2021
+[*]
+[dumpfile] "/home/jjchico/Documentos/asignaturas/edc-is/units/unit-04-simple_computer/yasac/stage1/yasac_tb.vcd"
+[dumpfile_mtime] "Wed Mar 24 19:52:33 2021"
+[dumpfile_size] 4204
+[savefile] "/home/jjchico/Documentos/asignaturas/edc-is/units/unit-04-simple_computer/yasac/stage1/yasac_tb.gtkw"
+[timestart] 0
+[size] 1649 598
+[pos] -1 -1
+*-16.173698 123500 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] test.
+[treeopen] test.uut.
+[sst_width] 233
+[signals_width] 254
+[sst_expanded] 1
+[sst_vpaned_height] 144
+@28
+test.clk
+test.reset
+test.start
+test.ready
+@22
+test.din[7:0]
+test.dout[7:0]
+@28
+test.uut.control_unit.state[1:0]
+@22
+test.uut.data_unit.pc[7:0]
+@28
+test.uut.data_unit.inst[15:0]
+test.uut.data_unit.ir[15:0]
+test.uut.data_unit.opcode[4:0]
+@24
+test.uut.data_unit.sa[2:0]
+test.uut.data_unit.sb[2:0]
+@22
+test.uut.data_unit.k[7:0]
+@29
+test.uut.control_unit.opcode[4:0]
+@22
+test.dout[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

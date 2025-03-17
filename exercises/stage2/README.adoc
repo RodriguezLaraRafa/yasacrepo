@@ -1,0 +1,15 @@
+= YASAC stage 2
+
+Data memory and I/O.
+
+== Fixes
+
+* control_unit.v: Forgot next state in LDST2 (is FETCH).
+* data_mem.v: Test program does not work if data mem not initialized.
+  Data mem initialized to all zero.
+* data_mem.v: ISE does not support memories in sensitivity list. Had to
+  workaround data output multiplexing.
+
+== Notes
+
+

@@ -1,0 +1,14 @@
+= YASAC stage 3
+
+Status register and branch instructions.
+
+== Fixes
+
+* Remove width parameter from alu (was not used).
+* Put in place defalult values for new control signals (wpc, wsreg).
+* Fix carry calculation in ALU. It is "result[8]^a[7]^b[7]" for both add
+  and sub, but it is not very intuitive.
+
+== Notes
+
+

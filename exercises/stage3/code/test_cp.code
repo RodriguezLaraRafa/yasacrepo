@@ -1,0 +1,7 @@
+code['h00] = {`LDI,  `R1,  8'h05};
+code['h01] = {`LDI,  `R2,  8'h09};
+
+code['h02] = {`CP,  `R1, 5'd0, `R2};
+code['h03] = {`CPI,  `R1, 8'h05};
+code['h04] = {`CPI,  `R1, 8'h06};
+code['h05] = {`STOP, 11'd0};

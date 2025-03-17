@@ -1,0 +1,45 @@
+// Design:      Yet Another Simple Academic Computer (YASAC)
+// File:        branch_text.code
+// Description: Code memory program, to be included by code_mem.v.
+//              Tests branch instructions. Works from stage 3.
+// Author:      Jorge Juan-Chico <jjchico@dte.us.es>
+// Date:        2021-04-03 (initial)
+
+//// Instruction formats
+//
+// format A: <opcode>(5) <Ra>(3) <zero>(5) <Rb>(3)
+// format B: <opcode>(5) <Ra>(3) <k>(8)
+// format C: <opcode>(5) <s>(3) <k>(8)
+//
+// k -> inmediate value
+// s -> branch condition code
+//
+// input:
+//      port08
+// output:
+//      port01
+//
+// FIXME
+//      port08  port01(expected)
+//      0x40    0x01
+//      0x60    ...
+
+        // Code memory contents (program)
+
+        code['h00] = {`LDI,  `R2,  8'h50};     //        LDI R2, 0x50
+        code['h01] = {`LDS,  `R1,  8'hf8};     //        LDS R1, 0xf8  // port08
+        code['h02] = {`SUB,  `R1,  5'd0, `R2}; //        SUB R1, R2
+        code['h03] = {`BRLT,       8'h08};     //        BRLT LESS
+        code['h04] = {`BRCS,       8'h0a};     //        BRCS CARRY
+        code['h05] = {`BRVS,       8'h0c};     //        BRVS OVER
+        code['h06] = {`BRZC,       8'h0e};     //        BRZC NZERO
+        code['h07] = {`JMP,  3'h0, 8'h0f};     //        JMP END
+        code['h08] = {`LDI,  `R3,  8'h01};     // LESS:  LDI R3, 0x01
+        code['h09] = {`JMP,  3'h0, 8'h0f};     //        JMP END
+        code['h0a] = {`LDI,  `R3,  8'h02};     // CARRY: LDI R3, 0x02
+        code['h0b] = {`JMP,  3'h0, 8'h0f};     //        JMP END
+        code['h0c] = {`LDI,  `R3,  8'h03};     // OVER:  LDI R3, 0x03
+        code['h0d] = {`JMP,  3'h0, 8'h0f};     //        JMP END
+        code['h0e] = {`LDI,  `R3,  8'h04};     // NZERO: LDI R3, 0x04
+        code['h0f] = {`STS,  `R3,  8'hf1};     // END:   STS 0x81, R3  // port01
+        code['h10] = {`STOP, 11'd0};           //        STOP

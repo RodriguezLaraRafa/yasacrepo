@@ -1,0 +1,11 @@
+= YASAC stage 4
+
+Status register and branch instructions.
+
+== Fixes/changes
+
+* sreg flag index names changed from SX to XF. Not a fix but a better name.
+
+== Notes
+
+* "op" and "s" change their widths which affects to multiple files.

@@ -1,0 +1,22 @@
+/*Vamos a usar las operaciones de branching para comprobar el valor que tiene el bit del signo en el status register
+Si el bit es 1, entonces hacemos hacemos un shift right y despues con una mascara le ponemos el 1
+Si el bit de signo es 0, entonces hacemos un shift right y con una mascara le ponemos el 
+*/
+        code['h0] = {`LDS, `R0, 8'hf8};
+        code['h01] = {`LDI, `R1, 8'b00000000};
+        code['h2] = {`ADDI, `R0, 8'h00};
+        //Si NF es 0, rotamos sin mas. Si NF es 1, le añadimos el 1
+        code['h03] = {`BRPL,       8'h05};
+
+        //Caso en el que el sign bit era 1
+        code['h04] = {`LDI, `R1, 8'b10000000};
+
+        //Rotacion
+        code['h05] = {`CLC, 8'h00};
+        code['h06] = {`ROR,  `R0, 8'h00};
+        code['h07] = {`ADD,  `R0, 5'd0, `R1};
+
+        code['h08] = {`STS, `R0, 8'hf1};
+        code['h9] = {`STOP, 11'd0};
+
+

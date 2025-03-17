@@ -1,0 +1,37 @@
+// Design:      Yet Another Simple Academic Computer (YASAC)
+// File:        branch_text.code
+// Description: Code memory program, to be included by code_mem.v.
+//              Tests branch instructions. Works from stage 3.
+// Author:      Jorge Juan-Chico <jjchico@dte.us.es>
+// Date:        2021-04-03 (initial)
+
+//// Instruction formats
+//
+// format A: <opcode>(5) <Ra>(3) <zero>(5) <Rb>(3)
+// format B: <opcode>(5) <Ra>(3) <k>(8)
+// format C: <opcode>(5) <s>(3) <k>(8)
+//
+// k -> inmediate value
+// s -> branch condition code
+//
+// input:
+//      change program code from 0x00 to 0x06.
+// expected output:
+//      port01: result of the operation at 0x04
+//      port02: 0xff
+
+        // Code memory contents (program)
+
+        code['h00] = {`LDI,  `R0,  8'd120};    //       LDI R0, 120
+        code['h01] = {`LDI,  `R1,  8'd40};     //       LDS R1, 40
+        code['h02] = {`STS,  `R0,  8'hf1};     //       STS 0xf1, R0
+        code['h03] = {`STS,  `R1,  8'hf2};     //       STS 0xf2, R1
+        code['h04] = {`ADD,  `R0,  5'd0, `R1}; //       ADD R0, R1
+        code['h05] = {`STS,  `R0,  8'hf1};     //       STS 0xf1, R0
+        code['h06] = {`BRVS,       8'h08};     //       BRVS OK
+        code['h07] = {`STOP, 11'd0};           //       STOP
+        code['h08] = {`JMP,  3'h0, 8'h0a};     // OK    JMP CONT
+        code['h09] = {`STOP, 11'd0};           //       STOP
+        code['h0a] = {`LDI,  `R3,  8'hff};     // CONT  LDI R3, 0xff
+        code['h0b] = {`STS,  `R3,  8'hf2};     //       STS 0xf2, R3
+        code['h0c] = {`STOP, 11'd0};           //       STOP

@@ -1,0 +1,60 @@
+// Design:      Yet Another Simple Academic Computer (YASAC)
+// File:        fibonacci.code
+// Description: Code memory program, to be included by code_mem.v.
+//              Generate numbers of the fibonacci sequence, as many as
+//              the value in port08. Output the numbers of the sequence in
+//              port01.
+// Author:      Jorge Juan-Chico <jjchico@dte.us.es>
+// Date:        2021-04-03 (initial)
+
+//// Instruction formats
+//
+// format A: <opcode>(5) <Ra>(3) <zero>(5) <Rb>(3)
+// format B: <opcode>(5) <Ra>(3) <k>(8)
+// format C: <opcode>(5) <s>(3) <k>(8)
+//
+// k -> inmediate value
+// s -> branch condition code
+
+// input:
+//      port08 = 0x07 (sequence: 0, 1, 1, 2, 3, 5, 8)
+// expected output:
+//      port01 = 0x08
+
+// Code memory contents (program)
+
+//         ldi  r0, 0x0            // use r0 as 0
+//         lds  r1, 0xf8           // read port08. r1 is our counter
+//         mov  r2, r1             // save r1
+//         sub  r2, r0             // compare with 0 and finish if true
+//         brzs finish
+//         ldi  r2, 0xff           // initialize the sequence generator
+//         ldi  r3, 1              //   r2 = -1, r3 = 1
+// loop:   mov  r4, r2             // calculate new value
+//         add  r4, r3
+//         sts  0xf1, r4           // output new value
+//         ldi  r0, 1              // decrement counter
+//         sub  r1, r0
+//         brzs finish             // finish if done
+//         mov  r2, r3             // update the sequence generator
+//         mov  r3, r4
+//         jmp  loop
+// finish: stop
+
+        code['h00] = {`LDI,  `R0, 8'h00};
+        code['h01] = {`LDS,  `R1, 8'hf8};
+        code['h02] = {`MOV,  `R2, 5'd0, `R1};
+        code['h03] = {`SUB,  `R2, 5'd0, `R0};
+        code['h04] = {`BRZS,      8'h10};
+        code['h05] = {`LDI,  `R2, 8'hff};
+        code['h06] = {`LDI,  `R3, 8'h01};
+        code['h07] = {`MOV,  `R4, 5'd0, `R2};           // LOOP
+        code['h08] = {`ADD,  `R4, 5'd0, `R3};
+        code['h09] = {`STS,  `R4, 8'hf1};
+        code['h0a] = {`LDI,  `R0, 8'h01};
+        code['h0b] = {`SUB,  `R1, 5'd0, `R0};
+        code['h0c] = {`BRZS,      8'h10};
+        code['h0d] = {`MOV,  `R2, 5'd0, `R3};
+        code['h0e] = {`MOV,  `R3, 5'd0, `R4};
+        code['h0f] = {`JMP,  3'h0, 8'h07};
+        code['h10] = {`STOP, 11'd0};                    // FINISH

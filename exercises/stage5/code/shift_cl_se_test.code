@@ -1,0 +1,43 @@
+// Design:      Yet Another Simple Academic Computer (YASAC)
+// File:        shift_cl_se_test.code
+// Description: Code memory program, to be included by code_mem.v.
+//              Tests shift and sreg instructions. Works from stage 4.
+// Author:      Jorge Juan-Chico <jjchico@dte.us.es>
+// Date:        2021-04-03 (initial)
+
+//// Instruction formats
+//
+// format A: <opcode>(5) <Ra>(3) <zero>(5) <Rb>(3)
+// format B: <opcode>(5) <Ra>(3) <k>(8)
+// format C: <opcode>(5) <s>(3) <k>(8)
+//
+// k -> inmediate value
+// s -> branch condition code
+
+// input:
+//      port08 = 0x5a
+// expected output:
+//      port01 = 0xa2
+//      port02 = 0x8a
+
+// Code memory contents (program)
+
+                                         //                 ; C +++R0+++
+code['h00] = {`LDI,  `R0, 8'h00};        // ldi r0, 0       ; r0 = 0
+code['h01] = {`SUB,  `R0, 5'h00, `R0};   // sub r0, r0      ; C=N=V=S=0, Z=1
+code['h02] = {`LDS,  `R0, 8'hf8};        // lds r0, 0xf8    ; 0 01011010 (0 5a)
+code['h03] = {`ROL,  `R0, 8'h00};        // rol r0          ; 0 10110100 (0 b4)
+code['h04] = {`ROL,  `R0, 8'h00};        // rol r0          ; 1 01101000 (1 68)
+code['h05] = {`ROL,  `R0, 8'h00};        // rol r0          ; 0 11010001 (0 c1)
+code['h06] = {`ROL,  `R0, 8'h00};        // rol r0          ; 1 10100010 (1 a2)
+code['h07] = {`STS,  `R0, 8'hf1};        // sts 0xf1, r0    ; port01 = a2
+code['h08] = {`BCLR,  `CF, 8'h0e};       // clc             ; 0 10100010 (0 a2)
+code['h09] = {`ROR,  `R0, 8'h00};        // ror r0          ; 0 01010001 (0 51)
+code['h0a] = {`BCLR,  `CF, 8'h0e};       // clc             ; 0 01010001 (0 51)
+code['h0b] = {`ROR,  `R0, 8'h00};        // ror r0          ; 1 00101000 (1 28)
+code['h0c] = {`BCLR,  `CF, 8'h0e};       // clc             ; 0 00101000 (0 28)
+code['h0d] = {`ROR,  `R0, 8'h00};        // ror r0          ; 0 00010100 (0 14)
+code['h0e] = {`BSET,  `CF, 8'h0e};       // sec             ; 1 00010100 (1 14)
+code['h0f] = {`ROR,  `R0, 8'h00};        // ror r0          ; 0 10001010 (0 8a)
+code['h10] = {`STS,  `R0, 8'hf2};        // sts 0xf2, r0    ; port02 = 8a
+code['h11] = {`STOP, 11'd0     };        // stop            ;)

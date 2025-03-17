@@ -1,0 +1,7 @@
+code['h00] = {`LDI,  `R3, 8'h05};
+code['h01] = {`NEG,  `R3, 8'h00};
+code['h02] = {`LDI,  `R0, 8'h00};
+code['h03] = {`CPI,  `R0, 8'h00};
+code['h04] = {`CPI,  `R0, 8'h05};
+
+code['h05] = {`STOP, 11'd0     };        // stop

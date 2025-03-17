@@ -1,0 +1,45 @@
+/*
+
+Exercise 18. Write a blinking LED test program. The program should make an LED connected to
+bit 0 of port03 to blink once per second (changes its value once every ½ second). Assume the
+computer’s clock signal frequency is 1000Hz. Use subroutines to optimize the code when possible
+(e.g. a subroutine that waits for half a second and a subroutine that complements bit 0 of port03 may
+be useful here)
+
+Supongo que tendrá que ir en un bucle infinito
+
+//waiting500 subroutine
+(five nop operations)
+
+//blinking subroutine
+complement once and then again
+
+*/
+code['h00] = {`LDS,  `R0,  8'hf3}; //R0 is storing Port 3
+code['h01] = {`LDI,  `R1,  8'b00000001};      //mascara para parpadear luego
+code['h02] = {`CALL, 3'h0, 8'h05};      //         call wait
+code['h03] = {`CALL, 3'h0, 8'h0b};      //         call blink
+code['h04] = {`JMP,  3'h0, 8'h02};
+
+
+
+//necesitamos en total esperar 500 ciclos de reloj. NOP tarda 2 (contando el fetch), CPI tb, Branch tb y SUBI tb. Return y call tardan 4
+//EOR tarda 2 y STS tarda 3  (500-4-2-4-4-2-2-2-2) / (2+2+2+2) = 60
+code['h05] = {`LDI,  `R2, 8'h3c}; //Habria que poner un numero mas grande
+code['h06] = {`SUBI,  `R2, 8'h01};
+code['h07] = {`BREQ,       8'h0a};
+
+code['h08] = {`NOP, 11'h0}; 
+code['h09] = {`JMP,  3'h0, 8'h06};
+
+code['h0a] = {`RET,  11'd0};
+
+//subrutina parpadear
+
+code['h0b] = {`EOR,  `R0, 5'd0, `R1};      // parapadeo
+code['h0c] = {`STS,  `R0,  8'hf3}; //R0 is storing Port 8
+code['h0d] = {`RET,  11'd0};
+
+
+
+

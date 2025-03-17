@@ -1,0 +1,42 @@
+/*
+A number in port08 represents the ASCII code of a character.
+Write a program that
+determines if the code corresponds to a letter. In that case, write the code of the upper case letter to
+port02. In other case, write 0 to port02. In either case, write the input code to 
+*/
+
+code['h00] = {`LDS,  `R0, 8'hf8}; //ascii code in R0
+code['h01] = {`MOV,  `R1, 5'd0, `R0};   //R1 copies R0
+code['h02] = {`LDI,  `R2, 8'h41};  //uppercase A is 41 in ASCII
+code['h03] = {`STS,  `R0, 8'hf1}; //Store input in port 1
+
+//first check
+code['h04] = {`SUB,  `R1, 5'd0, `R2};
+code['h05] = {`BRLO,      8'h11};  //If this is not true we know it is not a letter and we jump to the case b
+
+//second check
+code['h06] = {`MOV,  `R1, 5'd0, `R0};   
+code['h07] = {`LDI,  `R2, 8'h7b}; // 7A is lowercase z in ASCII
+code['h08] = {`SUB,  `R1, 5'd0, `R2};
+code['h09] = {`BRGE,      8'h11}; //branch to case b if greater than 7a
+
+//we have to check that the number is not between 91 and 96, both included
+
+code['h0a] = {`MOV,  `R1, 5'd0, `R0};   
+code['h0b] = {`LDI,  `R2, 8'h5a}; //90 in hexadecimal
+code['h0c] = {`SUB,  `R2, 5'd0, `R1}; //If 91 greater than the number, go to (it is a letter) case
+code['h0d] = {`BRGE,      8'h13};
+
+code['h0e] = {`LDI,  `R2, 8'h60};  //96 in hexadecimal
+code['h0f] = {`SUB,  `R2, 5'd0, `R1}; //If 96 is lower than the number, go to (it is a letter) case
+code['h10] = {`BRLO,      8'h13};
+
+//Now, here it executes case b (writing 0 to port b) 
+code['h11] = {`LDI,  `R0, 8'h00};
+code['h12] = {`JMP,  3'h0, 8'h15}; //In this line is the port writing
+
+//Here goes the mask to put the letter in uppercase
+code['h13] = {`LDI,  `R2, 8'b11011111}; //Third bit must be always 0 in upppercase letters
+code['h14] = {`AND,  `R0, 5'd0, `R2}; //We convert the ascii letter to uppercase
+code['h15] = {`STS,  `R0, 8'hf2};
+code['h16] = {`STOP, 11'd0}; 

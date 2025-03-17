@@ -1,0 +1,71 @@
+/*
+A number in port08 is encoded in packed natural BCD format (it holds two BCD
+digits, each digit represented in base 2). Write a program that multiplies the number by 2 and saves
+the result (in packed natural BCD format) in port02:port01 (the combination of the two ports).
+*/
+
+//Example 1001 1001 (99 in BCD) outputs 0000 0001 1001 1000
+//Example 0100 1001 (41 in BCD) outputs 0000 0000 0100 0001
+
+
+/*Se me ocurre separar en 2 registros distintos el dígito más significativo y el de la derecha
+Sumamos el de la derecha consigo mismo, si da igual o menos que nueve, es correcto, y será los 4 bits de la derecha de port01
+Si da más que nueve se le suma un 6,  y se le suma 1 a los 4 dígitos de la izquierda cuando los vayamos a sumar.
+
+El digito menos significativo son los 4 bits mas a la derecha de la suma.  
+
+Podemos en cualquier punto y sin riesgo asignar al puerto 2 0000 0001 si el numero del puerto 8 es mayor o igual que 50
+O lo que es lo mismo, si port08[7:4] es mayor o igual que 5
+
+-------------------------------------------------------*/
+
+//We need to separate the first 4 bits and the last 4 bits by shifting and masking
+code['h00] = {`LDS,  `R0, 8'hf8};
+code['h01] = {`MOV,  `R1, 5'd0, `R0}; //en R1 van los 4 bits de la derecha
+code['h02] = {`LDI,  `R3, 8'h00};    //guardará el carry próximamente de la suma de los 4 de la derecha
+
+code['h03] = {`LDI,  `R2, 8'b00001111}; //mascara para que los 4 bits de la izquierda sean 0
+code['h04] = {`AND,  `R1, 5'd0, `R2};
+
+code['h05] = {`ADD,  `R1, 5'd0, `R1}; //Si esto es mayor que 9 le sumamos 6. Lo que de va a port08
+code['h06] = {`CPI,  `R1, 8'h0a}; //Si da menos que 10 no sumamos 6
+code['h07] = {`BRLO,       8'h0a};
+code['h08] = {`LDI,  `R3, 8'h01};  //R3 guarda el "carry" de la suma de los 4 bits de la derecha
+
+code['h09] = {`ADDI,  `R1, 8'h06}; 
+//acabamos de sumar los 4 bits de la derecha, ahora nos quedan los otros 4
+code['h0a] = {`ROR,  `R0, 8'h00};
+code['h0b] = {`ROR,  `R0, 8'h00};
+code['h0c] = {`ROR,  `R0, 8'h00};
+code['h0d] = {`ROR,  `R0, 8'h00};
+code['h0e] = {`AND,  `R0, 5'd0, `R2};  //Ahora en R0 estan los 4 bits mas significativos
+
+//Y ahora aprovechamos para determinar el valor del puerto 2. Será 1 si R0>=5
+code['h0f] = {`LDI,  `R4, 8'h00}; //En R4 va lo que dps pondremos en port2
+code['h10] = {`CPI,  `R0, 8'h05}; 
+code['h11] = {`BRLO,       8'h13};
+code['h12] = {`LDI,  `R4, 8'h01}; 
+
+code['h13] = {`STS,  `R4, 8'hf2}; //Ya tenemos el puerto 2
+
+//Toca sumar ahora los 4 bits mas significativos junto con el carry de R3
+code['h14] = {`ADD,  `R0, 5'd0, `R0}; 
+code['h15] = {`ADD,  `R0, 5'd0, `R3}; //Si esto es mayor que 9 le sumamos 6. Lo que de va a port08
+code['h16] = {`CPI,  `R0, 8'h0a}; //Si da menos que 10 no sumamos 6
+code['h17] = {`BRLO,       8'h19};
+code['h18] = {`ADDI,  `R0, 8'h06}; 
+
+code['h19] = {`ROL,  `R0, 8'h00};
+code['h1a] = {`ROL,  `R0, 8'h00};
+code['h1b] = {`ROL,  `R0, 8'h00};
+code['h1c] = {`ROL,  `R0, 8'h00};
+
+code['h1d] = {`LDI,  `R2, 8'b11110000}; //mascara para que los 4 bits de la derecha sean 0
+code['h1e] = {`AND,  `R0, 5'd0, `R2};  
+
+//Solo queda sumar los 4 de la derecha con los 4 de la izquerda y ya tenemos el puerto 1
+code['h1f] = {`LDI,  `R2, 8'b00001111}; //mascara para que los 4 bits de la izquierda sean 0
+code['h20] = {`AND,  `R1, 5'd0, `R2};
+code['h21] = {`ADD,  `R0, 5'd0, `R1}; 
+code['h22] = {`STS,  `R0, 8'hf1}; //Ya tenemos el puerto 1
+code['h25] = {`STOP, 11'd0     };        // stop

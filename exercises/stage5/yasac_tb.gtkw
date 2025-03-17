@@ -1,0 +1,121 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Sun Apr 11 14:47:10 2021
+[*]
+[dumpfile] "/home/jjchico/Documentos/asignaturas/edc-is/units/unit-04-simple_computer/yasac/stage5/yasac_tb.vcd"
+[dumpfile_mtime] "Sun Apr 11 14:00:35 2021"
+[dumpfile_size] 12611
+[savefile] "/home/jjchico/Documentos/asignaturas/edc-is/units/unit-04-simple_computer/yasac/stage5/yasac_tb.gtkw"
+[timestart] 0
+[size] 1554 767
+[pos] -1 -1
+*-17.013540 232800 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] test.
+[treeopen] test.uut.
+[treeopen] test.uut.data_unit.
+[sst_width] 233
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 202
+@28
+test.clk
+@c00200
+-YASAC
+@28
+test.reset
+test.start
+test.ready
+@22
+test.uut.data_unit.data_mem.port00[7:0]
+test.port01[7:0]
+test.port08[7:0]
+@1401200
+-YASAC
+@c00200
+-REGS
+@28
+test.uut.data_unit.sa[2:0]
+test.uut.data_unit.sb[2:0]
+test.uut.data_unit.inm
+@22
+test.uut.data_unit.rega[7:0]
+test.uut.data_unit.regb[7:0]
+test.uut.data_unit.alu_b[7:0]
+test.uut.data_unit.alu_out[7:0]
+@1401200
+-REGS
+@800200
+-PC
+@22
+test.uut.data_unit.pc[7:0]
+@28
+test.uut.data_unit.clpc
+test.uut.data_unit.ipc
+test.uut.data_unit.wpc
+test.uut.data_unit.rpc
+@1000200
+-PC
+@800200
+-IR
+@c00022
+test.uut.data_unit.ir[15:0]
+@28
+(0)test.uut.data_unit.ir[15:0]
+(1)test.uut.data_unit.ir[15:0]
+(2)test.uut.data_unit.ir[15:0]
+(3)test.uut.data_unit.ir[15:0]
+(4)test.uut.data_unit.ir[15:0]
+(5)test.uut.data_unit.ir[15:0]
+(6)test.uut.data_unit.ir[15:0]
+(7)test.uut.data_unit.ir[15:0]
+(8)test.uut.data_unit.ir[15:0]
+(9)test.uut.data_unit.ir[15:0]
+(10)test.uut.data_unit.ir[15:0]
+(11)test.uut.data_unit.ir[15:0]
+(12)test.uut.data_unit.ir[15:0]
+(13)test.uut.data_unit.ir[15:0]
+(14)test.uut.data_unit.ir[15:0]
+(15)test.uut.data_unit.ir[15:0]
+@1401200
+-group_end
+@28
+test.uut.data_unit.wir
+@2023
+^1 /home/jjchico/Documentos/asignaturas/edc-is/units/unit-04-simple_computer/yasac/stage5/gtkw/opcode.map
+test.uut.data_unit.opcode[4:0]
+@c00022
+test.uut.data_unit.s[2:0]
+@28
+(0)test.uut.data_unit.s[2:0]
+(1)test.uut.data_unit.s[2:0]
+(2)test.uut.data_unit.s[2:0]
+@1401202
+-group_end
+@c00022
+test.uut.data_unit.sa[2:0]
+@28
+(0)test.uut.data_unit.sa[2:0]
+(1)test.uut.data_unit.sa[2:0]
+(2)test.uut.data_unit.sa[2:0]
+@1401202
+-group_end
+@22
+test.uut.data_unit.sb[2:0]
+test.uut.data_unit.k[7:0]
+@1000200
+-IR
+@28
+test.uut.wmar
+test.uut.rmem
+test.uut.wmem
+@22
+test.uut.control_unit.state[2:0]
+test.uut.data_unit.bus[7:0]
+test.uut.data_unit.mar[7:0]
+test.uut.data_unit.ir[15:0]
+@24
+test.uut.opcode[4:0]
+@22
+test.uut.data_unit.alu_out[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

@@ -1,0 +1,21 @@
+        code['h00] = {`LDS,  `R0,  8'hf8};         //       Port 8 gets loaded to register 0 (number k)
+        code['h01] = {`LDI,  `R1,  8'h05};         //       En R1 vamos a guardar el numero de veces(menos uno) que se va a ejecutar el bucle
+        code['h02] = {`LDI,  `R2,  8'h00};         //      En R2 guardamos n, que empieza en 0
+        code['h03] = {`LDI,  `R3,  8'h01};         //       Guardamos el valor 1 en R3, para ir incrementando el valor de n
+        code['h04] = {`LDI,  `R4,  8'h00};         //En R4 va a ir el valor de n*k en cada iteracion
+
+        code['h05] = {`ADD,  `R4,  5'd0, `R0};     //       Iteracion en la "multiplicacion" de n*k
+        code['h06] = {`ADD,  `R2,  5'd0, `R3};     //       Incrementar el valor de n en 1
+        code['h07] = {`STS,  `R4,  8'hf1};         //       Guardar el valor de la multiplicacion en port01
+        code['h08] = {`MOV,  `R5, 5'd0, `R1};
+
+        code['h09] = {`SUB,  `R5, 5'd0, `R2};     //      Vamos a ver si el contador n es igual al numero de veces que se va a ejecutar el bucle
+        code['h0a] = {`BRGE, 8'h05};               //       Si no es igual, se repite el bucle
+        code['h0b] = {`STOP, 11'd0};               //       Si es igual, se para el programa
+
+ /*
+Write a test program that, starting at n0 = 0, generates the sequence ni = i*k at port01,
+where k is the value in port08 at the time the program starts executing.
+E.g., if port08=7, the sequence generated at port01 should be:
+0, 7, 14, 21, 28, .
+  */
